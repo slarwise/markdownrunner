@@ -7,7 +7,7 @@ fn main() {
     let file_path = &args[1];
     let contents = fs::read_to_string(file_path).unwrap();
 
-    let code_blocks = markdownrunner::run(contents).unwrap();
+    let code_blocks = markdownrunner::run(&contents).unwrap();
     dbg!("{:?}", &code_blocks);
 
     // Move this to the http response code

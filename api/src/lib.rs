@@ -1,8 +1,8 @@
-pub fn run(contents: String) -> Result<Vec<Vec<String>>, std::io::Error> {
+pub fn run(contents: &str) -> Result<Vec<Vec<&str>>, std::io::Error> {
     let pattern = &"```";
     let mut inside_code_block = false;
-    let mut code_blocks: Vec<Vec<String>> = Vec::new();
-    let mut code_block: Vec<String> = Vec::new();
+    let mut code_blocks: Vec<Vec<&str>> = Vec::new();
+    let mut code_block: Vec<&str> = Vec::new();
     for line in contents.lines() {
         if line.starts_with(pattern) && !inside_code_block {
             inside_code_block = true;
@@ -11,7 +11,7 @@ pub fn run(contents: String) -> Result<Vec<Vec<String>>, std::io::Error> {
             inside_code_block = false;
             code_block = Vec::new();
         } else if inside_code_block {
-            code_block.push(String::from(line));
+            code_block.push(line);
         }
     }
     return Ok(code_blocks);
