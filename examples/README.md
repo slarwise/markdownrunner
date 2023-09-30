@@ -3,12 +3,11 @@
 Here is a code snippet:
 
 ```sh
-ls -l
-mkdir test
+export TEST=test
+echo $TEST
 ```
 
 ```sh
-git init
-git checkout -b feature-branch
-git commit -av
+echo $PWD
+ls -l
 ```
