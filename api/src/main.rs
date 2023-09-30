@@ -39,11 +39,7 @@ fn main() {
             let code_blocks = markdownrunner::extract(contents);
             match format {
                 Output::Text => {
-                    let mut output: Vec<String> = vec![];
-                    for block in code_blocks {
-                        output.push(block.join("\n"));
-                    }
-                    println!("{}", output.join("\n\n"));
+                    println!("{}", code_blocks.join("\n\n"));
                 }
                 Output::Json => {
                     let json = serde_json::to_value(code_blocks).unwrap();
