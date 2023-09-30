@@ -1,4 +1,4 @@
-pub fn run(contents: &str) -> Result<Vec<Vec<&str>>, std::io::Error> {
+pub fn extract(contents: &str) -> Vec<Vec<&str>> {
     let pattern = &"```";
     let mut inside_code_block = false;
     let mut code_blocks: Vec<Vec<&str>> = Vec::new();
@@ -14,5 +14,5 @@ pub fn run(contents: &str) -> Result<Vec<Vec<&str>>, std::io::Error> {
             code_block.push(line);
         }
     }
-    return Ok(code_blocks);
+    return code_blocks;
 }
