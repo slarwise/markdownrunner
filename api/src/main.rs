@@ -1,6 +1,7 @@
 use clap::{Parser, Subcommand};
 use clap_stdin::FileOrStdin;
 use serde_json;
+use tokio;
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
@@ -21,6 +22,8 @@ enum Commands {
         #[arg(short, long, default_value = "text")]
         output: Output,
     },
+    /// Start a server on localhost:3000
+    Serve {},
 }
 
 #[derive(clap::ValueEnum, Clone)]
@@ -29,7 +32,8 @@ enum Output {
     Json,
 }
 
-fn main() {
+#[tokio::main]
+async fn main() {
     let cli = Cli::parse();
     match &cli.command {
         Commands::Extract {
@@ -47,5 +51,6 @@ fn main() {
                 }
             }
         }
+        Commands::Serve {} => markdownrunner::serve().await,
     }
 }

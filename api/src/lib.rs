@@ -1,3 +1,5 @@
+use axum::{routing::post, Json, Router};
+
 pub fn extract(contents: &str) -> Vec<String> {
     let pattern = &"```";
     let mut inside_code_block = false;
@@ -15,4 +17,18 @@ pub fn extract(contents: &str) -> Vec<String> {
         }
     }
     return code_blocks;
+}
+
+pub async fn post_extract(body: String) -> Json<Vec<String>> {
+    let code_blocks = extract(&body[..]);
+    return Json(code_blocks);
+}
+
+pub async fn serve() -> () {
+    let app = Router::new().route("/extract", post(post_extract));
+
+    axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())
+        .serve(app.into_make_service())
+        .await
+        .unwrap();
 }
